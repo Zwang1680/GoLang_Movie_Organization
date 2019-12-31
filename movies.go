@@ -10,11 +10,11 @@ type Node struct {
 	left   *Node
 	right  *Node
 	parent *Node
-	depth  int
 }
-type Mbts struct {
+type Mbst struct {
 	root     *Node
 	numNodes int
+	size     int
 }
 
 func (root *Node) insert(newnode *Node) {
@@ -35,8 +35,34 @@ func (root *Node) insert(newnode *Node) {
 
 func (tree *Mbst) Insert(value Movie) {
 	if tree.root == nil {
-		tree.root = &Node{nil, nil, value}
+		tree.root = &Node{value, nil, nil, nil}
 	}
 	tree.size++
-	tree.root.insert(&Node{nil, nil, value})
+	tree.root.insert(&Node{value, nil, nil, nil})
+}
+
+func (tree *Mbst) searchSpecific(s string) Movie {
+	n := searchSpecificHelper(s, tree.root)
+	empty := Movie{"", 0.0}
+	if n != nil {
+		return n.value
+	} else {
+		return empty
+	}
+}
+
+func searchSpecificHelper(s string, r *Node) *Node {
+	if r == nil {
+		return nil
+	}
+	if r.value.name == s {
+		return r
+	}
+	if s < r.value.name {
+		return searchSpecificHelper(s, r.left)
+	}
+	if s > r.value.name {
+		return searchSpecificHelper(s, r.right)
+	}
+	return nil
 }
