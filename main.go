@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/csv"
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -105,10 +104,5 @@ func main() {
 		temp.rating = rating
 		movies0 = append(movies0, temp)
 	}
-	moviesJSON, __ := json.Marshal(movies0)
-	if __ != nil {
-		log.Fatal(__)
-	}
-	fmt.Println(string(moviesJSON))
-	fmt.Println(movies0[1])
+	fmt.Println(movies0)
 }
